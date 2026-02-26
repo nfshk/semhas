@@ -68,13 +68,14 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- NAVIGATION & SUCCESS DETECTION ---
-# Cek apakah baru saja kirim (via URL parameter)
+# Logika deteksi parameter URL yang stabil untuk mencegah redirect loop
 query_params = st.query_params
-if "sent" in query_params and query_params["sent"] == "true":
-    st.session_state.page = 'thanks'
 
 if 'page' not in st.session_state:
-    st.session_state.page = 'home'
+    if "sent" in query_params:
+        st.session_state.page = 'thanks'
+    else:
+        st.session_state.page = 'home'
 
 def go_to_page(page_name):
     st.session_state.page = page_name
@@ -111,12 +112,11 @@ elif st.session_state.page == 'home':
                 Doakan juga semoga aku bisa segera menyusulll hehehe
             </p>
         </div>
-        <p style='font-size: 1.1rem; line-height: 1.6; color: #444;'>
+        <p style='font-size: 1.1rem; line-height: 1.6; color: #444; margin-top: 20px;'>
             <b>Kerenn bangett woyy!</b> Akhirnya menamatkan Uner ya bunddd... <br><br>
             Sebagai anak IT dan <b>Bestie GPT</b>, kali ini aku mau kasih hadiah lewat cara yang anti-mainstream nieehh. 
             Nafi si paling gas diajak kemanapun ini mau kasih hadiah semhas buat ente yaituuu...
         </p>
-
     </div>
     """, unsafe_allow_html=True)
     
@@ -167,7 +167,6 @@ elif st.session_state.page == 'gift_2':
     
     st.info("💡 Klik tombol di bawah untuk kirim jawabanmu langsung ke email Nafi.")
 
-    # GANTI URL BERIKUT DENGAN URL STREAMLIT KAMU SETELAH DEPLOY
     current_url = "https://nafisa-semhas-shofia.streamlit.app/" 
     form_url = "https://formsubmit.co/nafisahikaputriherra@gmail.com"
     
@@ -195,4 +194,3 @@ elif st.session_state.page == 'gift_2':
 # --- FOOTER ---
 st.markdown("<br><p style='text-align: center; color: #888; font-size:0.8rem;'>Handcrafted with ❤️ by Nafisahika</p>", unsafe_allow_html=True)
 st.components.v1.html("<script>window.parent.document.querySelector('section.main').scrollTo(0, 0);</script>", height=0)
-
