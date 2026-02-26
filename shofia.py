@@ -68,11 +68,9 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 # --- NAVIGATION & SUCCESS DETECTION ---
-# Logika deteksi parameter URL yang stabil untuk mencegah redirect loop
-query_params = st.query_params
-
+# Logika ini diperbaiki agar tidak terjadi redirect loop
 if 'page' not in st.session_state:
-    if "sent" in query_params:
+    if "sent" in st.query_params:
         st.session_state.page = 'thanks'
     else:
         st.session_state.page = 'home'
