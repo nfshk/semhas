@@ -3,27 +3,28 @@ import streamlit as st
 # --- KONFIGURASI HALAMAN ---
 st.set_page_config(page_title="Congrats Shofia! ✨", page_icon="🎓", layout="centered")
 
-# --- CUSTOM CSS (DIPERBAIKI TOTAL) ---
+# --- CUSTOM CSS (FONT POPPINS & CLEAN UI) ---
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-    html, body, [class*="css"] {
-        font-family: 'Quicksand', sans-serif;
+    /* Global Font Settings */
+    html, body, [class*="css"], .stMarkdown, p, h1, h2, h3 {
+        font-family: 'Poppins', sans-serif !important;
     }
 
     .stApp {
         background: linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%);
     }
 
-    /* Kartu Utama - Menghilangkan Animasi Floating yang bikin kotak geser */
+    /* Kartu Utama */
     .gift-card {
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.75);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border-radius: 30px;
         border: 1px solid rgba(255, 255, 255, 0.3);
-        padding: 30px;
+        padding: 35px;
         text-align: center;
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
         margin-top: 10px;
@@ -39,7 +40,7 @@ st.markdown("""
         text-align: center;
     }
 
-    /* Styling Tombol agar lebih rapi */
+    /* Styling Tombol */
     div.stButton > button {
         background: linear-gradient(45deg, #ff4b4b, #ff8585);
         color: white;
@@ -54,19 +55,24 @@ st.markdown("""
         margin-top: 20px;
     }
 
-    /* KUNCI: Menghilangkan padding dan border bawaan Streamlit Form */
+    /* Remove Streamlit Form Border */
     [data-testid="stForm"] {
         border: none !important;
         padding: 0 !important;
     }
 
     .block-container {
-        padding-top: 2rem;
+        padding-top: 3rem;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# --- NAVIGATION LOGIC ---
+# --- NAVIGATION & SUCCESS DETECTION ---
+# Cek apakah baru saja kirim (via URL parameter)
+query_params = st.query_params
+if "sent" in query_params and query_params["sent"] == "true":
+    st.session_state.page = 'thanks'
+
 if 'page' not in st.session_state:
     st.session_state.page = 'home'
 
@@ -74,25 +80,43 @@ def go_to_page(page_name):
     st.session_state.page = page_name
     st.rerun()
 
+# --- HALAMAN PENUTUP (SEE YA!) ---
+if st.session_state.page == 'thanks':
+    st.markdown("<h1 class='title-text'>Terima Kasih Shofia! ✨</h1>", unsafe_allow_html=True)
+    st.markdown("""
+    <div class='gift-card'>
+        <h2 style='color: #ff4b4b;'>Jawabanmu Terkirim! ✅</h2>
+        <p style='font-size: 1.2rem; line-height: 1.8; color: #444;'>
+            Yeay! Nafi sudah terima jawaban kamu.<br>
+            Nanti langsung dikabarin ya buat janjiannya. 
+        </p>
+        <h3 style='color: #ff4b4b; margin-top: 20px;'>See yaaa! 👋✨</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    if st.button("Kembali ke Depan"):
+        st.query_params.clear()
+        go_to_page('home')
+
 # --- HALAMAN 1: HOME ---
-if st.session_state.page == 'home':
+elif st.session_state.page == 'home':
     st.markdown("<h1 class='title-text'>Semhastulation Shofia (u.o) S.KM 🎓</h1>", unsafe_allow_html=True)
     
     st.markdown("""
     <div class='gift-card'>
         <h2 style='color: #ff4b4b; margin-bottom: 10px;'>Proud of you, Shoff! ✨</h2>
-        <p style='font-size: 1.1rem; line-height: 1.6; color: #444;'>
-            <b>Kerenn bangett woyy!</b> Akhirnya menamatkan Uner ya bunddd... <br><br>
-            Sebagai anak IT dan <i>Bestie GPT</i>, kali ini aku mau kasih hadiah lewat cara yang anti-mainstream nieehh. 
-            Nafi si paling gas diajak kemanapun ini mau kasih hadiah semhas buat ente yaituuu...
-        </p>
         <div style='background: rgba(255,255,255,0.5); padding: 15px; border-radius: 20px; margin-top: 20px;'>
             <p style='font-style:italic; color: #666; margin:0;'>
-                Semoga dilancarkan revisiannya, yudisium, wisuda, dan kehidupan after kuliah ya shoff. <br>
-                Semoga makin josjis kedepannyaa <br>
+                Semoga dilancarkan revisiannya, yudisium, wisuda, dan segala kehidupan after kuliah ya shoff. <br>
+                Semoga makin josjis deh kedepannyaa <br>
                 Doakan juga semoga aku bisa segera menyusulll hehehe
             </p>
         </div>
+        <p style='font-size: 1.1rem; line-height: 1.6; color: #444;'>
+            <b>Kerenn bangett woyy!</b> Akhirnya menamatkan Uner ya bunddd... <br><br>
+            Sebagai anak IT dan <b>Bestie GPT</b>, kali ini aku mau kasih hadiah lewat cara yang anti-mainstream nieehh. 
+            Nafi si paling gas diajak kemanapun ini mau kasih hadiah semhas buat ente yaituuu...
+        </p>
+
     </div>
     """, unsafe_allow_html=True)
     
@@ -102,10 +126,9 @@ if st.session_state.page == 'home':
 # --- HALAMAN 2: HADIAH 1 ---
 elif st.session_state.page == 'gift_1':
     st.markdown("<h2 class='title-text'>Hadiah #1: Bukber Gratis Bareng Nafii 🍜</h2>", unsafe_allow_html=True)
-    
+
     with st.form("main_form", border=False):
-        # Header dipindah ke dalam form agar tidak ada gap
-        st.markdown("<p style='font-weight:600; color:#444; margin-bottom: 10px;'>Pilih tempat & waktu janjian yaa:</p>", unsafe_allow_html=True)
+        st.markdown("<p style='font-weight:600; color:#444; margin-bottom: 10px;'>Pilih tempat & waktu janjian bebass yaa:</p>", unsafe_allow_html=True)
         
         tempat = st.radio(
             "Tempat Favorit:",
@@ -122,7 +145,6 @@ elif st.session_state.page == 'gift_1':
             st.session_state.tgl = str(tanggal)
             st.session_state.pesan = catatan
             go_to_page('gift_2')
-            
     st.markdown("</div>", unsafe_allow_html=True)
 
 # --- HALAMAN 3: HADIAH 2 ---
@@ -145,21 +167,23 @@ elif st.session_state.page == 'gift_2':
     
     st.info("💡 Klik tombol di bawah untuk kirim jawabanmu langsung ke email Nafi.")
 
-    email_penerima = "nafisahikaputriherra@gmail.com"
-    form_url = f"https://formsubmit.co/{email_penerima}"
+    # GANTI URL BERIKUT DENGAN URL STREAMLIT KAMU SETELAH DEPLOY
+    current_url = "https://nafisa-semhas-shofia.streamlit.app/" 
+    form_url = "https://formsubmit.co/nafisahikaputriherra@gmail.com"
     
     html_button = f"""
     <form action="{form_url}" method="POST">
         <input type="hidden" name="_subject" value="Jawaban Hadiah Semhas dari Shofia!">
-        <input type="hidden" name="Tempat" value="{makan}">
-        <input type="hidden" name="Tanggal" value="{tgl}">
+        <input type="hidden" name="Tempat Makan" value="{makan}">
+        <input type="hidden" name="Tanggal Janjian" value="{tgl}">
         <input type="hidden" name="Pesan" value="{pesan_user}">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="{current_url}?sent=true">
         <button type="submit" style="
             background: linear-gradient(45deg, #ff4b4b, #ff8585);
             color: white; padding: 18px; border: none; border-radius: 50px; 
             width: 100%; cursor: pointer; font-size: 18px; font-weight: bold;
-            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3); font-family: 'Quicksand', sans-serif;
+            box-shadow: 0 4px 15px rgba(255, 75, 75, 0.3); font-family: 'Poppins', sans-serif;
         ">Kirim ke Nafi & Selesai! ✨</button>
     </form>
     """
@@ -170,6 +194,4 @@ elif st.session_state.page == 'gift_2':
 
 # --- FOOTER ---
 st.markdown("<br><p style='text-align: center; color: #888; font-size:0.8rem;'>Handcrafted with ❤️ by Nafisahika</p>", unsafe_allow_html=True)
-
-# Script auto-scroll ke atas (PENTING biar gak nyangkut di bawah)
 st.components.v1.html("<script>window.parent.document.querySelector('section.main').scrollTo(0, 0);</script>", height=0)
