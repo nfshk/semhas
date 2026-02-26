@@ -132,7 +132,7 @@ elif st.session_state.page == 'gift_1':
         
         tempat = st.radio(
             "Tempat Favorit:",
-            ["Astaganaga", "Tjap Pengkol", "Ramen Ya/Suteki", "Ciamso", "Kogu"],
+            ["Astaganaga", "Tjap Pengkol", "Ramen Ya", "Ciamso", "Kogu", "Suteki", "AhPek"],
             horizontal=True
         )
         tanggal = st.date_input("Kapan nih?")
@@ -154,7 +154,7 @@ elif st.session_state.page == 'gift_2':
     st.markdown(f"""
     <div class='gift-card'>
         <h2 style='color: #ff4b4b; margin-bottom: 10px;'>PHOTOBOOTH TIME! 🎞️</h2>
-        <p style='font-size:1.1rem; color:#444;'>Biar wacana photobooth kita terealisasi, sekalian aja jadi hadiah semhas yekann!</p>
+        <p style='font-size:1.1rem; color:#444;'>Biar wacana photobooth kita terealisasi, sekalian aja jadi hadiah semhas yekann! Photobooth di Tunjungan sebelum bukber ye say</p>
         <p style='font-weight: bold; color: #ff4b4b; font-size: 1.3rem; margin-top:20px;'>
             Dress code: Pake baju secantik mungkin yaa! ✨
         </p>
@@ -195,3 +195,4 @@ elif st.session_state.page == 'gift_2':
 # --- FOOTER ---
 st.markdown("<br><p style='text-align: center; color: #888; font-size:0.8rem;'>Handcrafted with ❤️ by Nafisahika</p>", unsafe_allow_html=True)
 st.components.v1.html("<script>window.parent.document.querySelector('section.main').scrollTo(0, 0);</script>", height=0)
+
