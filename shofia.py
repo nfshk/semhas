@@ -166,7 +166,7 @@ elif st.session_state.page == 'gift_2':
     st.info("💡 Klik tombol di bawah untuk kirim jawabanmu langsung ke email Nafi.")
 
     current_url = "https://nafisa-semhas-shofia.streamlit.app/" 
-    form_url = "https://formsubmit.co/nafisahikaputriherra@gmail.com"
+    form_url = "https://formsubmit.co/nafisahika.organisasi@gmail.com"
     
     html_button = f"""
     <form action="{form_url}" method="POST">
@@ -192,3 +192,4 @@ elif st.session_state.page == 'gift_2':
 # --- FOOTER ---
 st.markdown("<br><p style='text-align: center; color: #888; font-size:0.8rem;'>Handcrafted with ❤️ by Nafisahika</p>", unsafe_allow_html=True)
 st.components.v1.html("<script>window.parent.document.querySelector('section.main').scrollTo(0, 0);</script>", height=0)
+
